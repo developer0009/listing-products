@@ -4,12 +4,12 @@ import React, { useRef } from "react";
 import { useFetch } from "./utils/useFetch";
 import { styles } from "./utils/constants";
 import { Routes, Route } from "react-router-dom";
+import Cart from "./components/Cart";
 function App() {
   const button = useRef();
   const [row] = useFetch();
   const [selectRow, setSelectRow] = React.useState([]);
   const props = { button, row, setSelectRow };
-  // console.log(selectRow);
   return (
     <div className="App">
       <h1 style={{ textAlign: "center" }}>Hello World</h1>
@@ -17,6 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Data {...props} />} />
           <Route path="/:name" element={<Data {...props} />} />
+          <Route path="/product/cart" element={<Cart />} />
         </Routes>
       </div>
     </div>

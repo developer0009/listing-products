@@ -55,7 +55,11 @@ const Navbar = ({ button }) => {
           style={{ cursor: "pointer", objectFit: "contain" }}
           ref={button}
         >
-          <Link to={"/product/cart"} className="link text-white">
+          <Link
+            to={"/product/cart"}
+            className="link link2  text-white"
+            style={{ textDecoration: "none" }}
+          >
             Add To Cart{" "}
           </Link>
         </button>
