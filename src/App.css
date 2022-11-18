@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  margin-top: 50px;
 }
 
 .App-logo {
@@ -35,4 +36,19 @@
   to {
     transform: rotate(360deg);
   }
+}
+.cart :hover {
+  cursor: pointer;
+  opacity: 0.5;
+}
+* {
+  font-family: "Poppins", sans-serif;
+  font-family: "Quicksand", sans-serif;
+}
+a.link {
+  text-decoration: none;
+}
+a.link:hover {
+  text-decoration: underline;
+  /* border: 2px solid red; */
 }

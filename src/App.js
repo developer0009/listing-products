@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import Data from "./components/Data";
+import React, { useRef } from "react";
+import { useFetch } from "./utils/useFetch";
+import { styles } from "./utils/constants";
+import { Routes, Route } from "react-router-dom";
 function App() {
+  const button = useRef();
+  const [row] = useFetch();
+  const [selectRow, setSelectRow] = React.useState([]);
+  const props = { button, row, setSelectRow };
+  // console.log(selectRow);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1 style={{ textAlign: "center" }}>Hello World</h1>
+      <div style={styles}>
+        <Routes>
+          <Route path="/" element={<Data {...props} />} />
+          <Route path="/:name" element={<Data {...props} />} />
+        </Routes>
+      </div>
     </div>
   );
 }
-
 export default App;
