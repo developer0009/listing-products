@@ -24,3 +24,10 @@
 <br/>
 <h4 style="text-align:center;">Cart Page</h4>
 <img src="./images/five.png" />
+
+<h3>Dependencies --used</h3>
+<p>
+  <div> Axios --> for fetching the api</div>
+  <div> react-router-dom --> for router</div>
+<div> Material UI , Bootstrap  --> for UI</div>
+</p>
