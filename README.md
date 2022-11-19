@@ -20,3 +20,7 @@
 
 <h4 style="text-align:center;">Category Page</h4>
 <img src="./images/four.png" />
+<br/>
+<br/>
+<h4 style="text-align:center;">Cart Page</h4>
+<img src="./images/five.png" />

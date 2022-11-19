@@ -2,7 +2,7 @@ import "./App.css";
 import Data from "./components/Data";
 import React, { useRef } from "react";
 import { useFetch } from "./utils/useFetch";
-import { styles } from "./utils/constants";
+
 import { Routes, Route } from "react-router-dom";
 import Cart from "./components/Cart";
 function App() {
@@ -13,13 +13,11 @@ function App() {
   return (
     <div className="App">
       <h1 style={{ textAlign: "center" }}>Hello World</h1>
-      <div style={styles}>
-        <Routes>
-          <Route path="/" element={<Data {...props} />} />
-          <Route path="/:name" element={<Data {...props} />} />
-          <Route path="/product/cart" element={<Cart />} />
-        </Routes>
-      </div>
+      <Routes>
+        <Route path="/" element={<Data {...props} />} />
+        <Route path="/:name" element={<Data {...props} />} />
+        <Route path="/product/cart" element={<Cart row={selectRow} />} />
+      </Routes>
     </div>
   );
 }

@@ -19,7 +19,7 @@ const Navbar = ({ button }) => {
           <ul class="dropdown-menu">
             {categories.map((str) => (
               <li>
-                <Link to={str} className="dropdown-item">
+                <Link to={"/" + str} className="dropdown-item">
                   {str[0].toUpperCase() + str.substring(1)}
                 </Link>
               </li>
