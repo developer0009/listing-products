@@ -12,7 +12,7 @@ function App() {
   const props = { button, row, setSelectRow };
   return (
     <div className="App">
-      <h1 style={{ textAlign: "center" }}>Hello World</h1>
+      <h1 className="text-center text-info">Welcome to Toothsi</h1>
       <Routes>
         <Route path="/" element={<Data {...props} />} />
         <Route path="/:name" element={<Data {...props} />} />
