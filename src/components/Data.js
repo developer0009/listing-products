@@ -6,14 +6,19 @@ import Navbar from "./Navbar";
 export default function Data({ row, button, setSelectRow }) {
   const { name } = useParams();
   if (name) row = array(row, name);
-
+  const [searchRow, setSearchRow] = React.useState([]);
+  const props = {
+    setSearchRow,
+    button,
+    row,
+  };
   return (
     <>
       <div style={styles} id="data">
-        <Navbar button={button} />
+        <Navbar {...props} />
         {row.length !== 33 && (
           <DataGrid
-            rows={row}
+            rows={searchRow.length ? searchRow : row}
             checkboxSelection
             columns={[...columns]}
             hideFooter

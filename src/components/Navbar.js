@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { categories } from "../utils/constants";
-import { Link, Navigate } from "react-router-dom";
-const Navbar = ({ button }) => {
-  const handleClick = (evt) => {
-    console.log("iam clickked");
-    return <Navigate to={"/product/cart"} />;
+import { Link } from "react-router-dom";
+import { checkPattern } from "../utils/constants";
+const Navbar = ({ button, row, setSearchRow }) => {
+  const [search, setSearch] = useState("");
+  const handleChange = (evt) => {
+    setSearch(() => evt.target.value);
+    const regex = new RegExp(`${evt.target.value}\w*`, "gmi");
+    const array = checkPattern(row, regex);
+    if (evt.target.value && array.length > 0) setSearchRow(() => array);
+    if (!evt.target.value) setSearchRow([]);
   };
+  const handleClick = () => {};
   return (
     <div className="nav">
       <div className="first d-flex">
@@ -36,7 +42,7 @@ const Navbar = ({ button }) => {
         >
           {" "}
           RESET{" "}
-          <Link to="/" className="text-danger">
+          <Link to="/" className="text-danger" onClick={handleClick}>
             {" "}
             <i class="fa-solid fa-clock-rotate-left"></i>{" "}
           </Link>
@@ -52,6 +58,8 @@ const Navbar = ({ button }) => {
           type="text"
           placeholder="Product Name"
           style={{ marginRight: "10px" }}
+          value={search}
+          onChange={handleChange}
         />
         <button
           ref={button}
