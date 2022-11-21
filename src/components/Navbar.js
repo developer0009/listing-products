@@ -1,7 +1,11 @@
 import React from "react";
 import { categories } from "../utils/constants";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 const Navbar = ({ button }) => {
+  const handleClick = (evt) => {
+    console.log("iam clickked");
+    return <Navigate to={"/product/cart"} />;
+  };
   return (
     <div className="nav">
       <div className="first d-flex">
@@ -50,17 +54,26 @@ const Navbar = ({ button }) => {
           style={{ marginRight: "10px" }}
         />
         <button
-          disabled
-          className="btn btn-sm btn-info rounded-pill"
-          style={{ cursor: "pointer", objectFit: "contain" }}
           ref={button}
+          className="btn "
+          disabled
+          style={{
+            cursor: "pointer",
+            objectFit: "contain",
+            padding: 0,
+          }}
         >
           <Link
             to={"/product/cart"}
-            className="link link2  text-white"
-            style={{ textDecoration: "none" }}
+            style={{
+              display: "block",
+              // border: "2px solid red",
+              objectFit: "cover",
+              textDecoration: "none",
+            }}
+            className="link link2 text-light btn btn-sm rounded-pill btn-info "
           >
-            Add To Cart{" "}
+            Add To Cart
           </Link>
         </button>
       </div>

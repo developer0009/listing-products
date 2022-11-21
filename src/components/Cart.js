@@ -1,7 +1,7 @@
 import React from "react";
-import { columns, col } from "../utils/constants";
+import { col } from "../utils/constants";
 import { DataGrid } from "@mui/x-data-grid";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 const Cart = ({ row }) => {
   const navigate = useNavigate();
   console.log("am in", row);
@@ -14,7 +14,7 @@ const Cart = ({ row }) => {
       });
 
   console.log(total);
-  return (
+  return row.length ? (
     <div style={{ textAlign: "start" }} className="container">
       <button
         className="btn btn-dark border my-3 rounded-pill"
@@ -58,6 +58,8 @@ const Cart = ({ row }) => {
         </div>
       </div>
     </div>
+  ) : (
+    <Navigate to={"/"} />
   );
 };
 

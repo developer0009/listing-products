@@ -186,3 +186,11 @@ export const col = [
     valueGetter: (params) => `${params.row.rating.rate} out of 5`,
   },
 ];
+const checkPattern = (row, regeXpattern) => {
+  const arr = [];
+  for (const val of row) {
+    if (val.title.match(regeXpattern) !== null) arr.push(val);
+  }
+  console.log(arr);
+  return arr;
+};

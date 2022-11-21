@@ -2,12 +2,11 @@ import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { columns, styles, array } from "../utils/constants";
 import { useParams } from "react-router-dom";
-// import { array } from "../utils/constants";
 import Navbar from "./Navbar";
 export default function Data({ row, button, setSelectRow }) {
   const { name } = useParams();
-
   if (name) row = array(row, name);
+
   return (
     <>
       <div style={styles} id="data">
