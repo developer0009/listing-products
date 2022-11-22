@@ -11,7 +11,10 @@ const Navbar = ({ button, row, setSearchRow }) => {
     if (evt.target.value && array.length > 0) setSearchRow(() => array);
     if (!evt.target.value) setSearchRow([]);
   };
-  const handleClick = () => {};
+  const handleClick = () => {
+    setSearch("");
+    setSearchRow([]);
+  };
   return (
     <div className="nav">
       <div className="first d-flex">
@@ -60,6 +63,7 @@ const Navbar = ({ button, row, setSearchRow }) => {
           style={{ marginRight: "10px" }}
           value={search}
           onChange={handleChange}
+          defaultValue={search}
         />
         <button
           ref={button}

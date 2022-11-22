@@ -1,4 +1,6 @@
 import { GRID_CHECKBOX_SELECTION_COL_DEF } from "@mui/x-data-grid";
+import { useEffect, useRef, useState } from "react";
+import Rating from "./Rating";
 export const URL = "https://fakestoreapi.com/products";
 export const categories = [
   "electronics",
@@ -66,10 +68,11 @@ export const columns = [
     headerName: "Price",
     sortable: false,
     editable: false,
-    valueGetter: (params) =>
-      `${params.row.price + " $" || ""} ${params.row.lastName || ""}`,
+    valueGetter: (params) => {
+      const price = params.row.price;
+      return `${price + " $" || ""} ${params.row.lastName || ""}`;
+    },
   },
-
   {
     headerName: "Buy Now",
     renderCell: (params) => (
@@ -78,6 +81,7 @@ export const columns = [
       </div>
     ),
     sortable: false,
+    wdth: 100,
   },
   {
     field: "",
@@ -87,7 +91,12 @@ export const columns = [
   },
 ];
 export const array = (row, name) => {
-  return row.filter((obj) => obj.category == name);
+  row = row.filter((obj) => obj.category == name);
+  row = row.map((obj, index) => {
+    return { ...obj, id: index + 1 };
+  });
+  console.log("changed id ", row);
+  return row;
 };
 export const styles = {
   height: 1000,
@@ -148,48 +157,92 @@ export const col = [
   },
 
   {
-    headerName: "Quantity",
-    renderCell: (params) => (
-      <div className="quantity">
-        <a href="#" className="quantity__minus">
-          <span>-</span>
-        </a>
-        <input
-          name="quantity"
-          type="text"
-          className="quantity__input"
-          value="1"
-        />
-        <a href="#" className="quantity__plus">
-          <span>+</span>
-        </a>
-      </div>
-    ),
+    headerName: "Subtotal",
+    headerAlign: "center",
+    renderCell: (params) => {
+      let value = 0;
+      const price = params.row.price;
+      const App = () => {
+        const [val, setVal] = useState(value);
+        return (
+          <>
+            {" "}
+            <div className="quantity">
+              <a
+                disabled={value <= 1 && true}
+                style={{ cursor: "pointer" }}
+                className="quantity__minus"
+                onClick={() => {
+                  if (value >= 2) {
+                    value -= 1;
+                    setVal((val) => val - 1);
+                    params.row.price *= value;
+                  }
+                }}
+              >
+                <span disabled={value <= 1 && true}>-</span>
+              </a>
+              <input
+                name="quantity"
+                type="text"
+                className="quantity__input"
+                readOnly
+                value={value + 1}
+              />
+              <a
+                className="quantity__plus"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  if (value <= 10) {
+                    value += 1;
+                    setVal((val) => val + 1);
+                    params.row.price *= value;
+                  }
+                }}
+              >
+                <span>+</span>
+              </a>
+            </div>
+            <div
+              className="subtotal border fs-4"
+              style={{ marginLeft: "auto" }}
+            >
+              <span>{params.row.price + " $"}</span>
+            </div>
+          </>
+        );
+      };
+      return <App />;
+    },
 
     sortable: false,
+    width: 250,
   },
-  {
-    field: "price",
-    headerName: "Subtotal",
-    sortable: false,
-    editable: false,
-    valueGetter: (params) =>
-      `${params.row.price + " $" || ""} ${params.row.lastName || ""}`,
-    width: 100,
-  },
+
   {
     field: "rating",
     headerName: "Product Rating",
     sortable: false,
     editable: false,
     width: 170,
-    valueGetter: (params) => `${params.row.rating.rate} out of 5`,
+    renderCell: (params) => {
+      console.log(params);
+      return (
+        <span className="text-warning fw-semibold">
+          {" "}
+          <Rating
+            rating={params.row.rating.rate}
+            total={params.row.rating.count}
+          />
+        </span>
+      );
+    },
   },
 ];
 export const checkPattern = (row, regeXpattern) => {
   const arr = [];
-  for (const val of row) {
-    if (val.title.match(regeXpattern) !== null) arr.push(val);
+  for (const value of row) {
+    if (value.title.match(regeXpattern) !== null) arr.push(value);
   }
   console.log(arr);
   return arr;

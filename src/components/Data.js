@@ -5,7 +5,11 @@ import { useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 export default function Data({ row, button, setSelectRow }) {
   const { name } = useParams();
-  if (name) row = array(row, name);
+  if (name) {
+    row = array(row, name);
+    console.log("am in data 2nd one i ran??", row);
+    // console.log();
+  }
   const [searchRow, setSearchRow] = React.useState([]);
   const props = {
     setSearchRow,
