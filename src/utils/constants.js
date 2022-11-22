@@ -186,9 +186,12 @@ export const delRow = (row, setRow, value, setValue) => {
                 className="quantity__minus"
                 onClick={(evt) => {
                   id = params.row.id;
-                  if (value >= 2) {
-                    setValue(value - 1);
-                    params.row.quantity = value - 1;
+                  if (params.row.quantity >= 2) {
+                    setValue({
+                      ...value,
+                      [params.row.index]: params.row.quantity - 1,
+                    });
+                    params.row.quantity -= 1;
                   }
                 }}
               >
@@ -199,15 +202,18 @@ export const delRow = (row, setRow, value, setValue) => {
                 type="text"
                 className="quantity__input quantityCol"
                 readOnly
-                value={value}
+                value={params.row.quantity}
               />
               <a
                 className="quantity__plus"
                 style={{ cursor: "pointer" }}
                 onClick={(evt) => {
-                  if (value <= 10) {
-                    setValue(value + 1);
-                    params.row.quantity = value + 1;
+                  if (params.row.quantity <= 10) {
+                    setValue({
+                      ...value,
+                      [params.row.index]: params.row.quantity + 1,
+                    });
+                    params.row.quantity += 1;
                   }
                 }}
               >

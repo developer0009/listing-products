@@ -4,11 +4,16 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Navigate, useNavigate } from "react-router-dom";
 const Cart = ({ row, setRow }) => {
   const navigate = useNavigate();
-  const [value, setValue] = React.useState(1);
+  const indObj = {};
+  for (let i = 0; i < row.length; i++) {
+    indObj[i] = 1;
+  }
+  const [value, setValue] = React.useState(indObj);
   if (row.length <= 0) return <Navigate to={"/"} />;
-
-  // for (let i = 0; i < row.length; i++) row[i].quantity = value;
-
+  for (let i = 0; i < row.length; i++) {
+    row[i].quantity = value[i];
+    row[i].index = i;
+  }
   const obj = delRow(row, setRow, value, setValue);
 
   let total = 0;
