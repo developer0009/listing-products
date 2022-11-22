@@ -24,6 +24,10 @@
 <br/>
 <h4 style="text-align:center;">Cart Page</h4>
 <img src="./images/five.png" />
+<h4>Cart Quantity Add UP</h4>
+<img src="./images/seven.png"/>
+<h4>Search Option</h4>
+<img src="./images/six.png"/>
 
 <h3>Dependencies --used</h3>
 <p>

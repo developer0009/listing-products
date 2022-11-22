@@ -1,3 +1,4 @@
+import { resolveBreakpointValues } from "@mui/system/breakpoints";
 import { GRID_CHECKBOX_SELECTION_COL_DEF } from "@mui/x-data-grid";
 import { useEffect, useRef, useState } from "react";
 import Rating from "./Rating";
@@ -111,6 +112,14 @@ export const checkPattern = (row, regeXpattern) => {
   }
   return arr;
 };
+const updateRow = (id, row, value) => {
+  for (let i = 0; i < row.length; i++) {
+    if (row[i].id === id) {
+      row[i].quantity = value - 1;
+      break;
+    }
+  }
+};
 export const delRow = (row, setRow, value, setValue) => {
   const handleClick = (id) => {
     console.log(id);
@@ -182,13 +191,10 @@ export const delRow = (row, setRow, value, setValue) => {
                 style={{ cursor: "pointer" }}
                 className="quantity__minus"
                 onClick={() => {
-                  console.log("getting row wait ", params.api.getRow());
-                  if (value >= 2 && params.id === params.row.id) {
+                  console.log("getting row wait ", params.row.id);
+                  if (value >= 2) {
                     setValue(value - 1);
-                    for (let i = 0; i < row.length; i++) {
-                      if (row[i].id === params.row.name)
-                        params.row.quantity = value - 1;
-                    }
+                    updateRow(params.row.id, row, value);
                   }
                 }}
               >
