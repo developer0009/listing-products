@@ -53,7 +53,7 @@ const Rating = ({ rating, total, color = "#f8e825" }) => {
           <i className="fa-regular fa-star"></i>
         )}
       </span>
-      {/* <span> {total && `  of ${total} reviews`}</span> */}
+      <span className="text-dark ml-auto"> {` ${rating}`}</span>
     </div>
   );
 };
