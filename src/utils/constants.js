@@ -43,12 +43,10 @@ export const columns = [
         className="link"
       >
         {params.value.substring(0, 25)}
-        {/* {params.row.rating.rate} */}
       </a>
     ),
   },
 
-  // { field: "category", headerName: "Category", width: 130, sortable: false },,
   {
     field: "description",
     headerName: "Stock",
@@ -56,8 +54,6 @@ export const columns = [
     sortable: false,
     editable: false,
     width: 100,
-    // valueGetter: (params) =>
-    //   `${params.row.description || ""} ${params.row.lastName || ""}`,
     renderCell: (params) => (
       <div style={{ color: "#078aa5" }}>
         <i className="fa-solid fa-face-smile"></i> In Stock
@@ -88,7 +84,6 @@ export const columns = [
     field: "",
     ...GRID_CHECKBOX_SELECTION_COL_DEF,
     width: 100,
-    // renderCell: (params) => <span>H</span>,
   },
 ];
 export const array = (row, name) => {
@@ -122,8 +117,6 @@ const updateRow = (id, row, value) => {
 };
 export const delRow = (row, setRow, value, setValue) => {
   const handleClick = (id) => {
-    console.log(id);
-    console.log("deletion successfull or not");
     const newArr = row.filter((obj) => obj.id !== id);
     setRow(newArr);
   };
@@ -183,6 +176,7 @@ export const delRow = (row, setRow, value, setValue) => {
       headerName: "Subtotal",
       headerAlign: "center",
       renderCell: (params) => {
+        let id;
         return (
           <>
             {" "}
@@ -190,11 +184,11 @@ export const delRow = (row, setRow, value, setValue) => {
               <a
                 style={{ cursor: "pointer" }}
                 className="quantity__minus"
-                onClick={() => {
-                  console.log("getting row wait ", params.row.id);
+                onClick={(evt) => {
+                  id = params.row.id;
                   if (value >= 2) {
                     setValue(value - 1);
-                    updateRow(params.row.id, row, value);
+                    params.row.quantity = value - 1;
                   }
                 }}
               >
@@ -210,11 +204,10 @@ export const delRow = (row, setRow, value, setValue) => {
               <a
                 className="quantity__plus"
                 style={{ cursor: "pointer" }}
-                onClick={() => {
-                  if (value <= 10 && params.id === params.row.id) {
+                onClick={(evt) => {
+                  if (value <= 10) {
                     setValue(value + 1);
                     params.row.quantity = value + 1;
-                    console.log("clicked on", params.id);
                   }
                 }}
               >
@@ -226,7 +219,7 @@ export const delRow = (row, setRow, value, setValue) => {
               style={{ marginLeft: "auto" }}
             >
               <span className="priceCol">
-                {params.row.price * params.row.quantity + " $"}
+                {params.row.price * (params.row.quantity || 1) + " $"}
               </span>
             </div>
           </>
@@ -243,7 +236,6 @@ export const delRow = (row, setRow, value, setValue) => {
       editable: false,
       width: 170,
       renderCell: (params) => {
-        console.log(params);
         return (
           <span className="text-warning fw-semibold">
             {" "}

@@ -1,23 +1,26 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { delRow } from "../utils/constants";
 import { DataGrid } from "@mui/x-data-grid";
 import { Navigate, useNavigate } from "react-router-dom";
 const Cart = ({ row, setRow }) => {
   const navigate = useNavigate();
   const [value, setValue] = React.useState(1);
-  for (let i = 0; i < row.length; i++) {
-    if (!row[i]) return <Navigate to={"/"} />;
-    else {
-      row[i].quantity = value;
-    }
-  }
+  if (row.length <= 0) return <Navigate to={"/"} />;
+
+  // for (let i = 0; i < row.length; i++) row[i].quantity = value;
+
   const obj = delRow(row, setRow, value, setValue);
+
   let total = 0;
   if (row.length > 0 && row[0] != undefined) {
     const arr = row.map((obj) => {
-      return { price: obj.price, quantity: obj.quantity };
+      return {
+        price: obj.price,
+        quantity: obj.quantity,
+        subtotal: obj.price * obj.quantity,
+      };
     });
-    for (const val of arr) total += val.quantity * val.price;
+    for (const val of arr) total += (val.quantity || 1) * val.price;
   }
   return row.length ? (
     <div style={{ textAlign: "start" }} className="container">
