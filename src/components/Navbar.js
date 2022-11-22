@@ -17,7 +17,7 @@ const Navbar = ({ button, row, setSearchRow }) => {
   };
   return (
     <div className="nav">
-      <div className="first d-flex">
+      <div className="first d-flex firstMedia">
         <div class="dropdown ">
           <a
             class="btn btn-secondary dropdown-toggle btn btn-light rounded"
@@ -51,7 +51,11 @@ const Navbar = ({ button, row, setSearchRow }) => {
           </Link>
         </div>
       </div>
-      <div className="search-button  " style={{ marginLeft: "auto" }}>
+      <div
+        className="search-button searchMedia "
+        style={{ marginLeft: "auto" }}
+        id="second"
+      >
         <h5 className="fw-bold d-inline" style={{ fontWeight: "bolder" }}>
           {" "}
           Search{" "}
@@ -67,7 +71,7 @@ const Navbar = ({ button, row, setSearchRow }) => {
         />
         <button
           ref={button}
-          className="btn "
+          className="btn secondbutton"
           disabled
           style={{
             cursor: "pointer",

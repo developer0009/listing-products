@@ -55,6 +55,31 @@ a.link:hover {
 #data {
   width: 53%;
 }
+@media only screen and (max-width: 1030px) {
+  #data {
+    width: 75%;
+  }
+  div.firstMedia {
+    /* border: 2px solid red; */
+    margin: 0 auto;
+    margin-bottom: 20px;
+  }
+  .secondbutton {
+    /* display: flex; */
+    margin-top: 15px;
+  }
+}
+@media only screen and (max-width: 650px) {
+  div.firstMedia {
+    /* border: 2px solid red; */
+    margin: 0 auto;
+    margin-bottom: 20px;
+  }
+  .secondbutton {
+    /* display: flex; */
+    margin-top: 15px;
+  }
+}
 @media (width<=900px) {
   #data {
     width: 100%;
@@ -117,9 +142,4 @@ a.link:hover {
 .quantity__minus:visited,
 .quantity__plus:visited {
   color: #fff;
-}
-@media (width<=650) {
-  .nav {
-    display: flex;
-  }
 }
