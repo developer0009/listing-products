@@ -155,49 +155,37 @@ export const col = [
       </div>
     ),
   },
-
   {
     headerName: "Subtotal",
     headerAlign: "center",
     renderCell: (params) => {
-      let value = 0;
-      const price = params.row.price;
       const App = () => {
-        const [val, setVal] = useState(value);
+        const [val, setVal] = useState(1);
         return (
           <>
             {" "}
             <div className="quantity">
               <a
-                disabled={value <= 1 && true}
                 style={{ cursor: "pointer" }}
                 className="quantity__minus"
                 onClick={() => {
-                  if (value >= 2) {
-                    value -= 1;
-                    setVal((val) => val - 1);
-                    params.row.price *= value;
-                  }
+                  if (val >= 2) setVal(val - 1);
                 }}
               >
-                <span disabled={value <= 1 && true}>-</span>
+                <span>-</span>
               </a>
               <input
                 name="quantity"
                 type="text"
                 className="quantity__input"
                 readOnly
-                value={value + 1}
+                value={val}
               />
               <a
                 className="quantity__plus"
                 style={{ cursor: "pointer" }}
                 onClick={() => {
-                  if (value <= 10) {
-                    value += 1;
-                    setVal((val) => val + 1);
-                    params.row.price *= value;
-                  }
+                  if (val <= 10) setVal(val + 1);
                 }}
               >
                 <span>+</span>
@@ -207,7 +195,7 @@ export const col = [
               className="subtotal border fs-4"
               style={{ marginLeft: "auto" }}
             >
-              <span>{params.row.price + " $"}</span>
+              <span>{params.row.price * val + " $"}</span>
             </div>
           </>
         );

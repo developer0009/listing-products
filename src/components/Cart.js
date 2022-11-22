@@ -8,6 +8,7 @@ const Cart = ({ row }) => {
   for (const val of row) {
     if (!val) return <Navigate to={"/"} />;
   }
+  console.log("am i re rendering");
   let total = 0;
   if (row.length > 0 && row[0] != undefined) {
     const arr = row.map((obj) => {
