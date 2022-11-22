@@ -16,7 +16,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Data {...props} />} />
         <Route path="/:name" element={<Data {...props} />} />
-        <Route path="/product/cart" element={<Cart row={selectRow} />} />
+        <Route
+          path="/product/cart"
+          element={<Cart row={selectRow} setRow={setSelectRow} />}
+        />
       </Routes>
     </div>
   );

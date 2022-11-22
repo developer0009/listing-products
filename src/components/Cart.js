@@ -1,14 +1,18 @@
 import React from "react";
-import { col } from "../utils/constants";
+import { col, delRow } from "../utils/constants";
 import { DataGrid } from "@mui/x-data-grid";
 import { Navigate, useNavigate } from "react-router-dom";
-const Cart = ({ row }) => {
+const Cart = ({ row, setRow }) => {
   const navigate = useNavigate();
   const [value, setValue] = React.useState(1);
-  for (const val of row) {
-    if (!val) return <Navigate to={"/"} />;
+  const obj = delRow(row, setRow);
+  for (let i = 0; i < row.length; i++) {
+    if (!row[i]) return <Navigate to={"/"} />;
+    else {
+      row[i].quantity = value;
+    }
   }
-  console.log("am i re rendering");
+  console.log("after adding quantity", row);
   let total = 0;
   if (row.length > 0 && row[0] != undefined) {
     const arr = row.map((obj) => {
@@ -19,8 +23,6 @@ const Cart = ({ row }) => {
       return now + next;
     });
   }
-
-  console.log(total);
   return row.length ? (
     <div style={{ textAlign: "start" }} className="container">
       <button
@@ -36,7 +38,7 @@ const Cart = ({ row }) => {
           <DataGrid
             rows={row}
             // checkboxSelection
-            columns={col}
+            columns={[...obj, ...col]}
             hideFooter
             disableSelectionOnClick
             autoHeight

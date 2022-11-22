@@ -95,7 +95,6 @@ export const array = (row, name) => {
   row = row.map((obj, index) => {
     return { ...obj, id: index + 1 };
   });
-  console.log("changed id ", row);
   return row;
 };
 export const styles = {
@@ -104,63 +103,15 @@ export const styles = {
   marginBottom: "100px",
   marginTop: "30px",
 };
-
 export const col = [
-  {
-    field: "image",
-    // flex: 1,
-    headerName: "Product",
-    // headerAlign: "center",
-    width: 130,
-    renderCell: (params) => (
-      <div style={{ margin: 0 }}>
-        <div style={{ margin: "0 auto" }} className="text-danger d-inline">
-          {" "}
-          <i className="fa-solid fa-xmark"></i>
-        </div>
-        <img
-          src={params.value}
-          alt="product image"
-          style={{
-            width: "60%",
-            height: "50px",
-            objectFit: "contain",
-          }}
-        />
-        <a
-          href="https://google.com/"
-          style={{ color: "rgb(129, 38, 226)" }}
-          className="link"
-        >
-          {params.row.title.substring(0, 25)}
-        </a>
-      </div>
-    ),
-    sortable: false,
-    type: "image",
-    height: 100,
-    width: 370,
-    headerAlign: "center",
-  },
-  {
-    field: "description",
-    headerName: "Stock",
-    description: "This column has a value getter and is not sortable.",
-    sortable: false,
-    editable: false,
-    width: 100,
-    renderCell: () => (
-      <div style={{ color: "#078aa5" }}>
-        <i className="fa-solid fa-face-smile"></i> In Stock
-      </div>
-    ),
-  },
   {
     headerName: "Subtotal",
     headerAlign: "center",
     renderCell: (params) => {
+      let value = 1;
       const App = () => {
         const [val, setVal] = useState(1);
+        const [price, setPrice] = useState(params.row.price);
         return (
           <>
             {" "}
@@ -169,7 +120,11 @@ export const col = [
                 style={{ cursor: "pointer" }}
                 className="quantity__minus"
                 onClick={() => {
-                  if (val >= 2) setVal(val - 1);
+                  if (val >= 2) {
+                    setVal(val - 1);
+                    value -= 1;
+                    setPrice(price * value);
+                  }
                 }}
               >
                 <span>-</span>
@@ -177,15 +132,19 @@ export const col = [
               <input
                 name="quantity"
                 type="text"
-                className="quantity__input"
+                className="quantity__input quantityCol"
                 readOnly
-                value={val}
+                value={value}
               />
               <a
                 className="quantity__plus"
                 style={{ cursor: "pointer" }}
                 onClick={() => {
-                  if (val <= 10) setVal(val + 1);
+                  if (val <= 10) {
+                    setVal(val + 1);
+                    value += 1;
+                    setPrice(price * value);
+                  }
                 }}
               >
                 <span>+</span>
@@ -195,7 +154,7 @@ export const col = [
               className="subtotal border fs-4"
               style={{ marginLeft: "auto" }}
             >
-              <span>{params.row.price * val + " $"}</span>
+              <span className="priceCol">{price + " $"}</span>
             </div>
           </>
         );
@@ -232,6 +191,67 @@ export const checkPattern = (row, regeXpattern) => {
   for (const value of row) {
     if (value.title.match(regeXpattern) !== null) arr.push(value);
   }
-  console.log(arr);
   return arr;
+};
+export const delRow = (row, setRow) => {
+  const handleClick = (id) => {
+    console.log(id);
+    console.log("deletion successfull or not");
+    const newArr = row.filter((obj) => obj.id !== id);
+    setRow(newArr);
+  };
+  const obj = [
+    {
+      field: "image",
+      headerName: "Product",
+      width: 130,
+      renderCell: (params) => (
+        <div style={{ margin: 0 }}>
+          <div style={{ margin: "0 auto" }} className="text-danger d-inline">
+            {" "}
+            <i
+              className="fa-solid fa-xmark"
+              style={{ cursor: "pointer" }}
+              onClick={() => handleClick(params.row.id)}
+            ></i>
+          </div>
+          <img
+            src={params.value}
+            alt="product image"
+            style={{
+              width: "60%",
+              height: "50px",
+              objectFit: "contain",
+            }}
+          />
+          <a
+            href="https://google.com/"
+            style={{ color: "rgb(129, 38, 226)" }}
+            className="link"
+          >
+            {params.row.title.substring(0, 25)}
+          </a>
+        </div>
+      ),
+      sortable: false,
+      type: "image",
+      height: 100,
+      width: 370,
+      headerAlign: "center",
+    },
+    {
+      field: "description",
+      headerName: "Stock",
+      description: "This column has a value getter and is not sortable.",
+      sortable: false,
+      editable: false,
+      width: 100,
+      renderCell: () => (
+        <div style={{ color: "#078aa5" }}>
+          <i className="fa-solid fa-face-smile"></i> In Stock
+        </div>
+      ),
+    },
+  ];
+  return obj;
 };
