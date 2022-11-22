@@ -118,3 +118,8 @@ a.link:hover {
 .quantity__plus:visited {
   color: #fff;
 }
+@media (width<=650) {
+  .nav {
+    display: flex;
+  }
+}

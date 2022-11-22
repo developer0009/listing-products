@@ -12,18 +12,12 @@ const Cart = ({ row, setRow }) => {
     }
   }
   const obj = delRow(row, setRow, value, setValue);
-  console.log("after adding quantity", row);
   let total = 0;
   if (row.length > 0 && row[0] != undefined) {
     const arr = row.map((obj) => {
       return { price: obj.price, quantity: obj.quantity };
     });
-    console.log("prices array ", arr);
     for (const val of arr) total += val.quantity * val.price;
-
-    // total = arr.reduce((now, next) => {
-    //   return now.price * now.quantity + next.price * next.quantity;
-    // });
   }
   return row.length ? (
     <div style={{ textAlign: "start" }} className="container">
