@@ -1,27 +1,29 @@
 import React from "react";
-import { col, delRow } from "../utils/constants";
+import { delRow } from "../utils/constants";
 import { DataGrid } from "@mui/x-data-grid";
 import { Navigate, useNavigate } from "react-router-dom";
 const Cart = ({ row, setRow }) => {
   const navigate = useNavigate();
   const [value, setValue] = React.useState(1);
-  const obj = delRow(row, setRow);
   for (let i = 0; i < row.length; i++) {
     if (!row[i]) return <Navigate to={"/"} />;
     else {
       row[i].quantity = value;
     }
   }
+  const obj = delRow(row, setRow, value, setValue);
   console.log("after adding quantity", row);
   let total = 0;
   if (row.length > 0 && row[0] != undefined) {
     const arr = row.map((obj) => {
-      return obj.price || Math.floor(Math.random() * 50);
+      return { price: obj.price, quantity: obj.quantity };
     });
     console.log("prices array ", arr);
-    total = arr.reduce((now, next) => {
-      return now + next;
-    });
+    for (const val of arr) total += val.quantity * val.price;
+
+    // total = arr.reduce((now, next) => {
+    //   return now.price * now.quantity + next.price * next.quantity;
+    // });
   }
   return row.length ? (
     <div style={{ textAlign: "start" }} className="container">
@@ -38,7 +40,7 @@ const Cart = ({ row, setRow }) => {
           <DataGrid
             rows={row}
             // checkboxSelection
-            columns={[...obj, ...col]}
+            columns={[...obj]}
             hideFooter
             disableSelectionOnClick
             autoHeight

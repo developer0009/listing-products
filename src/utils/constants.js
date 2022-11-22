@@ -103,89 +103,7 @@ export const styles = {
   marginBottom: "100px",
   marginTop: "30px",
 };
-export const col = [
-  {
-    headerName: "Subtotal",
-    headerAlign: "center",
-    renderCell: (params) => {
-      let value = 1;
-      const App = () => {
-        const [val, setVal] = useState(1);
-        const [price, setPrice] = useState(params.row.price);
-        return (
-          <>
-            {" "}
-            <div className="quantity">
-              <a
-                style={{ cursor: "pointer" }}
-                className="quantity__minus"
-                onClick={() => {
-                  if (val >= 2) {
-                    setVal(val - 1);
-                    value -= 1;
-                    setPrice(price * value);
-                  }
-                }}
-              >
-                <span>-</span>
-              </a>
-              <input
-                name="quantity"
-                type="text"
-                className="quantity__input quantityCol"
-                readOnly
-                value={value}
-              />
-              <a
-                className="quantity__plus"
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  if (val <= 10) {
-                    setVal(val + 1);
-                    value += 1;
-                    setPrice(price * value);
-                  }
-                }}
-              >
-                <span>+</span>
-              </a>
-            </div>
-            <div
-              className="subtotal border fs-4"
-              style={{ marginLeft: "auto" }}
-            >
-              <span className="priceCol">{price + " $"}</span>
-            </div>
-          </>
-        );
-      };
-      return <App />;
-    },
 
-    sortable: false,
-    width: 250,
-  },
-
-  {
-    field: "rating",
-    headerName: "Product Rating",
-    sortable: false,
-    editable: false,
-    width: 170,
-    renderCell: (params) => {
-      console.log(params);
-      return (
-        <span className="text-warning fw-semibold">
-          {" "}
-          <Rating
-            rating={params.row.rating.rate}
-            total={params.row.rating.count}
-          />
-        </span>
-      );
-    },
-  },
-];
 export const checkPattern = (row, regeXpattern) => {
   const arr = [];
   for (const value of row) {
@@ -193,7 +111,7 @@ export const checkPattern = (row, regeXpattern) => {
   }
   return arr;
 };
-export const delRow = (row, setRow) => {
+export const delRow = (row, setRow, value, setValue) => {
   const handleClick = (id) => {
     console.log(id);
     console.log("deletion successfull or not");
@@ -251,6 +169,85 @@ export const delRow = (row, setRow) => {
           <i className="fa-solid fa-face-smile"></i> In Stock
         </div>
       ),
+    },
+    {
+      headerName: "Subtotal",
+      headerAlign: "center",
+      renderCell: (params) => {
+        return (
+          <>
+            {" "}
+            <div className="quantity">
+              <a
+                style={{ cursor: "pointer" }}
+                className="quantity__minus"
+                onClick={() => {
+                  console.log("getting row wait ", params.api.getRow());
+                  if (value >= 2 && params.id === params.row.id) {
+                    setValue(value - 1);
+                    for (let i = 0; i < row.length; i++) {
+                      if (row[i].id === params.row.name)
+                        params.row.quantity = value - 1;
+                    }
+                  }
+                }}
+              >
+                <span>-</span>
+              </a>
+              <input
+                name="quantity"
+                type="text"
+                className="quantity__input quantityCol"
+                readOnly
+                value={value}
+              />
+              <a
+                className="quantity__plus"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  if (value <= 10 && params.id === params.row.id) {
+                    setValue(value + 1);
+                    params.row.quantity = value + 1;
+                    console.log("clicked on", params.id);
+                  }
+                }}
+              >
+                <span>+</span>
+              </a>
+            </div>
+            <div
+              className="subtotal border fs-4"
+              style={{ marginLeft: "auto" }}
+            >
+              <span className="priceCol">
+                {params.row.price * params.row.quantity + " $"}
+              </span>
+            </div>
+          </>
+        );
+      },
+
+      sortable: false,
+      width: 250,
+    },
+    {
+      field: "rating",
+      headerName: "Product Rating",
+      sortable: false,
+      editable: false,
+      width: 170,
+      renderCell: (params) => {
+        console.log(params);
+        return (
+          <span className="text-warning fw-semibold">
+            {" "}
+            <Rating
+              rating={params.row.rating.rate}
+              total={params.row.rating.count}
+            />
+          </span>
+        );
+      },
     },
   ];
   return obj;
