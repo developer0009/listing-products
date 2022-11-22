@@ -28,7 +28,8 @@
 <img src="./images/seven.png"/>
 <h4>Search Option</h4>
 <img src="./images/six.png"/>
-
+<h4>Multiple Cart Option</h4>
+<img src="./images/eight.png"/>
 <h3>Dependencies --used</h3>
 <p>
   <div> Axios --> for fetching the api</div>

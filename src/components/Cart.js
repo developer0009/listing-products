@@ -66,7 +66,7 @@ const Cart = ({ row, setRow }) => {
                 <strong> {total} $ </strong>
               </span>
             </li>
-            <li className="list-group-item fs-4 text-center">
+            <li className="list-group-item fs-4 text-center ">
               Total : <strong className="text-info"> {total} $ </strong>
             </li>
             <li className="btn btn-info rounded-pill">Proceed To Check out</li>
