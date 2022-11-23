@@ -87,7 +87,7 @@ export const columns = [
   },
 ];
 export const array = (row, name) => {
-  row = row.filter((obj) => obj.category == name);
+  if (name) row = row.filter((obj) => obj.category == name);
   row = row.map((obj, index) => {
     return { ...obj, id: index + 1 };
   });
@@ -117,6 +117,7 @@ const updateRow = (id, row, value) => {
 };
 export const delRow = (row, setRow, value, setValue) => {
   const handleClick = (id) => {
+    console.log(id);
     const newArr = row.filter((obj) => obj.id !== id);
     setRow(newArr);
   };
@@ -255,4 +256,12 @@ export const delRow = (row, setRow, value, setValue) => {
     },
   ];
   return obj;
+};
+export const removeDuplicates = (arr) => {
+  const ids = arr.map((o) => o.title);
+  const filtered = arr.filter(
+    ({ title }, index) => !ids.includes(title, index + 1)
+  );
+  console.log(filtered);
+  return filtered;
 };

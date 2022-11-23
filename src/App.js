@@ -8,7 +8,7 @@ function App() {
   const button = useRef();
   const [row] = useFetch();
   const [selectRow, setSelectRow] = React.useState([]);
-  const props = { button, row, setSelectRow };
+  const props = { button, row, setSelectRow, selectRow };
 
   return (
     <div className="App ">

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { categories } from "../utils/constants";
 import { Link } from "react-router-dom";
 import { checkPattern } from "../utils/constants";
-const Navbar = ({ button, row, setSearchRow }) => {
+const Navbar = ({ button, row, setSearchRow, selectRow }) => {
   const [search, setSearch] = useState("");
   const handleChange = (evt) => {
     setSearch(() => evt.target.value);
@@ -72,7 +72,7 @@ const Navbar = ({ button, row, setSearchRow }) => {
         <button
           ref={button}
           className="btn secondbutton"
-          disabled
+          disabled={selectRow.length > 0 ? false : true}
           style={{
             cursor: "pointer",
             objectFit: "contain",
@@ -87,9 +87,11 @@ const Navbar = ({ button, row, setSearchRow }) => {
               objectFit: "cover",
               textDecoration: "none",
             }}
-            className="link link2 text-light btn btn-sm rounded-pill btn-info "
+            className={`link link2 text-light btn btn-sm rounded-pill ${
+              selectRow.length > 0 ? `btn-success` : `btn-info`
+            } `}
           >
-            Add To Cart
+            {selectRow.length > 0 ? `Check Cart` : `Add To Cart`}
           </Link>
         </button>
       </div>

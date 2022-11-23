@@ -1,20 +1,20 @@
 import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { columns, styles, array } from "../utils/constants";
+import { columns, styles, array, removeDuplicates } from "../utils/constants";
 import { useParams } from "react-router-dom";
 import Navbar from "./Navbar";
-export default function Data({ row, button, setSelectRow }) {
+export default function Data({ row, button, setSelectRow, selectRow }) {
   const { name } = useParams();
   if (name) {
     row = array(row, name);
     console.log("am in data 2nd one i ran??", row);
-    // console.log();
   }
   const [searchRow, setSearchRow] = React.useState([]);
   const props = {
     setSearchRow,
     button,
     row,
+    selectRow,
   };
   return (
     <>
@@ -28,10 +28,14 @@ export default function Data({ row, button, setSelectRow }) {
             hideFooter
             autoHeight
             disableColumnMenu
-            disableSelectionOnClick
+            // disableSelectionOnClick
             onSelectionModelChange={(id) => {
               const obj = id.map((num) => row[num - 1]);
-              setSelectRow(obj);
+              const finalArray = removeDuplicates(
+                array([...selectRow, ...obj])
+              );
+              console.log(finalArray);
+              setSelectRow(finalArray);
               if (obj.length > 0) button.current.disabled = false;
               else button.current.disabled = true;
             }}
