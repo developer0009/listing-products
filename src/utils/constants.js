@@ -72,24 +72,32 @@ export const columns = [
   },
   {
     headerName: "Buy Now",
-    renderCell: (params) => (
-      <div className=" text-dark mx-auto">
-        <span
-          contenteditable="true"
-          className="d-inline-block fs-4 px-3"
-          style={{ backgroundColor: "#F3EFE0" }}
-        >
-          {params.row.quantity}
-        </span>
+    renderCell: (params) => {
+      function myFunction(self, event) {
+        console.log("keyup");
+        console.log(self.key);
+        params.row.quantity = self.key;
+      }
+      return (
+        <div className=" text-dark mx-auto">
+          <span
+            contenteditable="true"
+            className="d-inline-block fs-4 px-3"
+            style={{ backgroundColor: "#F3EFE0" }}
+            onKeyUp={myFunction}
+          >
+            {params.row.quantity}
+          </span>
 
-        <div
-          style={{ fontSize: 18 }}
-          className="cart d-inline-block bg-dark px-3 py-1 text-white "
-        >
-          <i className="fa-solid fa-cart-shopping fs-5"></i>
+          <div
+            style={{ fontSize: 18 }}
+            className="cart d-inline-block bg-dark px-3 py-1 text-white "
+          >
+            <i className="fa-solid fa-cart-shopping fs-5"></i>
+          </div>
         </div>
-      </div>
-    ),
+      );
+    },
     sortable: false,
     wdth: 200,
   },
@@ -121,10 +129,14 @@ export const checkPattern = (row, regeXpattern) => {
   return arr;
 };
 
-export const delRow = (row, setRow, value, setValue, indObj) => {
-  const handleClick = (id) => {
+export const delRow = (row, setRow, value, setValue, indObj, orgRow) => {
+  const handleClick = (id, index) => {
     console.log(id);
+
     const newArr = row.filter((obj) => obj.id !== id);
+    for (let i = 0; i < orgRow.length; i++) {
+      if (index === orgRow[i].index) orgRow[i].quantity = 1;
+    }
     setRow(newArr);
   };
   const obj = [
@@ -139,7 +151,12 @@ export const delRow = (row, setRow, value, setValue, indObj) => {
             <i
               className="fa-solid fa-xmark"
               style={{ cursor: "pointer" }}
-              onClick={() => handleClick(params.row.id)}
+              onClick={() => {
+                handleClick(params.row.id, params.row.index);
+                indObj[params.row.index] = 1;
+                params.row.quantity = 1;
+                setValue({ ...value, [params.row.index]: 1 });
+              }}
             ></i>
           </div>
           <img

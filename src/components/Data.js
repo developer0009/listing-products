@@ -33,7 +33,7 @@ export default function Data({ row, button, setSelectRow, selectRow }) {
             hideFooter
             autoHeight
             disableColumnMenu
-            // disableSelectionOnClick
+            disableSelectionOnClick
             onSelectionModelChange={(id) => {
               const obj = id.map((num) => row[num - 1]);
               const finalArray = removeDuplicates(

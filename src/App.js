@@ -24,8 +24,8 @@ function App() {
   for (let i = 0; i < value.length; i++) {
     row[i].quantity = value[i];
   }
-  // console.log("in app");
-  console.log("in app.js", indObj);
+  console.log("in app", indObj);
+  console.log("in app.js", value);
   const props = {
     button,
     row,
@@ -47,8 +47,6 @@ function App() {
             <Cart
               row={selectRow}
               setRow={setSelectRow}
-              // value={value}
-              // setValue={setValue}
               indObj={indObj}
               orgRow={row}
             />

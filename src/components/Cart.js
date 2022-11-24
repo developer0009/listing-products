@@ -22,7 +22,7 @@ const Cart = ({ row, setRow, indObj, orgRow }) => {
 
   console.log("in vart obj", value);
   console.log("in cart rows", orgRow);
-  const obj = delRow(row, setRow, value, setValue, indObj);
+  const obj = delRow(row, setRow, value, setValue, indObj, orgRow);
   // console.log(obj);
   let total = 0;
   if (row.length > 0 && row[0] != undefined) {
@@ -35,6 +35,10 @@ const Cart = ({ row, setRow, indObj, orgRow }) => {
     });
     for (const val of arr) total += (val.quantity || 1) * val.price;
   }
+  const handleClick = (evt) => {
+    for (let i = 0; i < orgRow.length; i++) orgRow[i].quantity = 1;
+    setRow([]);
+  };
   return row.length ? (
     <div style={{ textAlign: "start" }} className="container border">
       <button
@@ -56,7 +60,7 @@ const Cart = ({ row, setRow, indObj, orgRow }) => {
       >
         <button
           className="btn btn-danger border my-3 rounded-pill "
-          onClick={() => setRow([])}
+          onClick={handleClick}
           style={{ display: "inline-block", margin: "auto" }}
         >
           {" "}
