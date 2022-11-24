@@ -2,20 +2,28 @@ import React, { useEffect, useMemo, useState } from "react";
 import { delRow } from "../utils/constants";
 import { DataGrid } from "@mui/x-data-grid";
 import { Navigate, useNavigate } from "react-router-dom";
-const Cart = ({ row, setRow }) => {
+const Cart = ({ row, setRow, indObj, orgRow }) => {
   const navigate = useNavigate();
-  const indObj = {};
-  for (let i = 0; i < row.length; i++) {
-    indObj[i] = 1;
-  }
+  // const indObj = {};
+  // for (let i = 0; i < row.length; i++) {
+  //   indObj[i] = 1;
+  // }
   const [value, setValue] = React.useState(indObj);
   if (row.length <= 0) return <Navigate to={"/"} />;
-  for (let i = 0; i < row.length; i++) {
-    row[i].quantity = value[i];
-    row[i].index = i;
-  }
-  const obj = delRow(row, setRow, value, setValue);
+  // for (let i = 0; i < row.length; i++) {
+  //   row[i].quantity = value[i];
+  //   row[i].index = i;
+  // }
 
+  for (let i = 0; i < orgRow.length; i++) {
+    orgRow[i].quantity = value[i];
+    console.log(value[i]);
+  }
+
+  console.log("in vart obj", value);
+  console.log("in cart rows", orgRow);
+  const obj = delRow(row, setRow, value, setValue, indObj);
+  // console.log(obj);
   let total = 0;
   if (row.length > 0 && row[0] != undefined) {
     const arr = row.map((obj) => {
@@ -28,7 +36,7 @@ const Cart = ({ row, setRow }) => {
     for (const val of arr) total += (val.quantity || 1) * val.price;
   }
   return row.length ? (
-    <div style={{ textAlign: "start" }} className="container">
+    <div style={{ textAlign: "start" }} className="container border">
       <button
         className="btn btn-dark border my-3 rounded-pill"
         onClick={() => navigate(-1)}
@@ -37,6 +45,24 @@ const Cart = ({ row, setRow }) => {
         {" "}
         Go Back
       </button>
+      <div
+        style={{
+          width: "57%",
+          display: "inline-block",
+          margin: "0 auto",
+          textAlign: "end",
+          // border: "2px solid red",
+        }}
+      >
+        <button
+          className="btn btn-danger border my-3 rounded-pill "
+          onClick={() => setRow([])}
+          style={{ display: "inline-block", margin: "auto" }}
+        >
+          {" "}
+          Delete All
+        </button>
+      </div>
       <div className="row">
         <div className="col-md-8">
           <DataGrid

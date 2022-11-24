@@ -5,16 +5,21 @@ import { useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 export default function Data({ row, button, setSelectRow, selectRow }) {
   const { name } = useParams();
+
+  const [searchRow, setSearchRow] = React.useState([]);
   if (name) {
     row = array(row, name);
     console.log("am in data 2nd one i ran??", row);
   }
-  const [searchRow, setSearchRow] = React.useState([]);
+  // const [searchRow, setSearchRow] = React.useState([]);
+
   const props = {
     setSearchRow,
     button,
     row,
     selectRow,
+    // value,
+    // setValue,
   };
   return (
     <>

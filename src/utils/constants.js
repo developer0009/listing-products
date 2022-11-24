@@ -65,20 +65,33 @@ export const columns = [
     headerName: "Price",
     sortable: false,
     editable: false,
-    valueGetter: (params) => {
-      const price = params.row.price;
-      return `${price + " $" || ""} ${params.row.lastName || ""}`;
+    renderCell: (params) => {
+      const { price } = params.row;
+      return <span>{`${price + " $" || ""}`} </span>;
     },
   },
   {
     headerName: "Buy Now",
     renderCell: (params) => (
-      <div style={{ margin: "0 auto", fontSize: 30 }} className="cart">
-        <i className="fa-solid fa-cart-shopping"></i>
+      <div className=" text-dark mx-auto">
+        <span
+          contenteditable="true"
+          className="d-inline-block fs-4 px-3"
+          style={{ backgroundColor: "#F3EFE0" }}
+        >
+          {params.row.quantity}
+        </span>
+
+        <div
+          style={{ fontSize: 18 }}
+          className="cart d-inline-block bg-dark px-3 py-1 text-white "
+        >
+          <i className="fa-solid fa-cart-shopping fs-5"></i>
+        </div>
       </div>
     ),
     sortable: false,
-    wdth: 100,
+    wdth: 200,
   },
   {
     field: "",
@@ -107,15 +120,8 @@ export const checkPattern = (row, regeXpattern) => {
   }
   return arr;
 };
-const updateRow = (id, row, value) => {
-  for (let i = 0; i < row.length; i++) {
-    if (row[i].id === id) {
-      row[i].quantity = value - 1;
-      break;
-    }
-  }
-};
-export const delRow = (row, setRow, value, setValue) => {
+
+export const delRow = (row, setRow, value, setValue, indObj) => {
   const handleClick = (id) => {
     console.log(id);
     const newArr = row.filter((obj) => obj.id !== id);
@@ -193,6 +199,10 @@ export const delRow = (row, setRow, value, setValue) => {
                       [params.row.index]: params.row.quantity - 1,
                     });
                     params.row.quantity -= 1;
+                    setValue({
+                      ...value,
+                      [params.row.index]: params.row.quantity,
+                    });
                   }
                 }}
               >
@@ -214,7 +224,14 @@ export const delRow = (row, setRow, value, setValue) => {
                       ...value,
                       [params.row.index]: params.row.quantity + 1,
                     });
+
                     params.row.quantity += 1;
+                    indObj[params.row.index] = params.row.quantity;
+                    // indObj[params.row.index] += 1;
+                    setValue({
+                      ...value,
+                      [params.row.index]: params.row.quantity,
+                    });
                   }
                 }}
               >

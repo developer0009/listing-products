@@ -7,8 +7,33 @@ import Cart from "./components/Cart";
 function App() {
   const button = useRef();
   const [row] = useFetch();
+  const indObj = {};
   const [selectRow, setSelectRow] = React.useState([]);
-  const props = { button, row, setSelectRow, selectRow };
+  for (let i = 0; i < row.length; i++) {
+    if (row[i].quantity) {
+      indObj[i] = row[i].quantity;
+      // row[i].quantity = indObj[i] + 1;
+      // row[i].index = i;
+    } else {
+      indObj[i] = 1;
+      row[i].quantity = indObj[i];
+      row[i].index = i;
+    }
+  }
+  const [value, setValue] = React.useState(indObj);
+  for (let i = 0; i < value.length; i++) {
+    row[i].quantity = value[i];
+  }
+  // console.log("in app");
+  console.log("in app.js", indObj);
+  const props = {
+    button,
+    row,
+    setSelectRow,
+    selectRow,
+    value,
+    setValue,
+  };
 
   return (
     <div className="App ">
@@ -18,7 +43,16 @@ function App() {
         <Route path="/:name" element={<Data {...props} />} />
         <Route
           path="/product/cart"
-          element={<Cart row={selectRow} setRow={setSelectRow} />}
+          element={
+            <Cart
+              row={selectRow}
+              setRow={setSelectRow}
+              // value={value}
+              // setValue={setValue}
+              indObj={indObj}
+              orgRow={row}
+            />
+          }
         />
       </Routes>
     </div>
