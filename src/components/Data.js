@@ -6,6 +6,8 @@ import Navbar from "./Navbar";
 export default function Data({ row, button, setSelectRow, selectRow }) {
   const { name } = useParams();
 
+  const [toggle, setToggle] = React.useState(false);
+
   const [searchRow, setSearchRow] = React.useState([]);
   if (name) {
     row = array(row, name);
@@ -29,7 +31,7 @@ export default function Data({ row, button, setSelectRow, selectRow }) {
           <DataGrid
             rows={searchRow.length ? searchRow : row}
             checkboxSelection
-            columns={[...columns]}
+            columns={columns(setToggle, toggle)}
             hideFooter
             autoHeight
             disableColumnMenu

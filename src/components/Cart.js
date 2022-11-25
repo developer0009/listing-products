@@ -40,9 +40,9 @@ const Cart = ({ row, setRow, indObj, orgRow }) => {
     setRow([]);
   };
   return row.length ? (
-    <div style={{ textAlign: "start" }} className="container border">
+    <div style={{ textAlign: "start" }} className="container ">
       <button
-        className="btn btn-dark border my-3 rounded-pill"
+        className="btn btn-dark  my-3 rounded-pill"
         onClick={() => navigate(-1)}
         style={{ marginRight: "auto" }}
       >

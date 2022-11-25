@@ -9,7 +9,7 @@ export const categories = [
   "men's clothing",
   "women's clothing",
 ];
-export const columns = [
+export const columns = (setToggle, toggle) => [
   {
     field: "image",
     // flex: 1,
@@ -76,18 +76,50 @@ export const columns = [
       function myFunction(self, event) {
         console.log("keyup");
         console.log(self.key);
-        params.row.quantity = self.key;
+        console.log(self);
+        const obj = {
+          p: 0,
+          q: 1,
+          w: 2,
+          e: 3,
+          r: 4,
+          t: 5,
+          y: 6,
+          u: 7,
+          i: 8,
+          o: 9,
+        };
+        console.log(obj[self.key] || obj["q"]);
+
+        if (Number(self.key)) params.row.quantity = Number(self.key);
+        else params.row.quantity = obj[self.key] || 1;
       }
       return (
         <div className=" text-dark mx-auto">
-          <span
+          {/* <span
             contenteditable="true"
             className="d-inline-block fs-4 px-3"
             style={{ backgroundColor: "#F3EFE0" }}
             onKeyUp={myFunction}
           >
             {params.row.quantity}
-          </span>
+          </span> */}
+          <input
+            type="text"
+            value={params.row.quantity}
+            className="d-inline-block fs-5 p-1"
+            width="20px"
+            style={{
+              backgroundColor: "#F3EFE0",
+              width: "30px",
+              height: "3%",
+              border: "none",
+            }}
+            onChange={(evt) => {
+              params.row.quantity = Number(evt.target.value);
+              setToggle(!toggle);
+            }}
+          />
 
           <div
             style={{ fontSize: 18 }}
