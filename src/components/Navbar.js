@@ -45,10 +45,19 @@ const Navbar = ({ button, row, setSearchRow, selectRow }) => {
         >
           {" "}
           RESET{" "}
-          <Link to="/" className="text-danger" onClick={handleClick}>
+          <a
+            href="/"
+            className="text-danger"
+            onClick={handleClick}
+            style={{ textDecoration: "none" }}
+          >
             {" "}
             <i class="fa-solid fa-clock-rotate-left"></i>{" "}
-          </Link>
+          </a>
+          {/* <Link to="/" className="text-danger" onClick={handleClick}>
+            {" "}
+            <i class="fa-solid fa-clock-rotate-left"></i>{" "}
+          </Link> */}
         </div>
       </div>
       <div
